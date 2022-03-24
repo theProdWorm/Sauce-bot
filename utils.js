@@ -27,20 +27,24 @@ const prefix = '!';
 
 var currentFolder = '';
 const embeds = addDirectory('embeds');
+const commands = addDirectory('commands');
 
 function addDirectory(directory) {
     currentFolder = directory;
     var fileList = {};
 
+    const files = fs.readdirSync(currentFolder);
+
     for (const file of files) {
+        console.log(file);
         if (!file.endsWith('.js')) {
             // 'file' is a folder
             currentFolder += `/${file}`;
-            addDirectory(fs.readdirSync(currentFolder + '/'));
-            currentFolder -= `/${file}`;
+            addDirectory(currentFolder);
+            currentFolder = currentFolder.substring(0, currentFolder.length - `{${file}}`.length + 1);
             continue;
         }
-        const fileName = file.substr(0, file.length - 3);
+        const fileName = file.substring(0, file.length - 3);
 
         fileList[fileName] = require(`./${currentFolder}/${fileName}`);
     }
@@ -49,7 +53,7 @@ function addDirectory(directory) {
 }
 
 function sendEmbed(message, source) {
-    const embed = require(`./embeds/${source}`);
+    const embed = embeds[source];
 
     return message.channel.send({ embeds: [embed] });
 }

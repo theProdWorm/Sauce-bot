@@ -8,6 +8,4 @@ function again(message, args) {
     runCommand(message);
 }
 
-module.exports = {
-    execute: again
-}
+module.exports = { execute: again }
