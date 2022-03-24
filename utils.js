@@ -2,8 +2,8 @@ const { MessageEmbed } = require('discord.js');
 
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotify = new SpotifyWebApi({
-    clientId: "fa62679703a244b3b2cca2c326cbb3ac",
-    clientSecret: "03d7cfec01b744d796002ce3aa983f30",
+    clientId: process.env.SPOTIFY_CLIENT_ID,
+    clientSecret: process.env.SPOTIFY_SECRET,
     redirectUri: "http://localhost",
 });
 
